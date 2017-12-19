@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: zipkin-server
+  sleuth:
+    enabled: false
+server:
+  port: ${ZIPKIN_PORT}
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8000/eureka/
+  healthcheck:
+    enabled: true
+zipkin.storage.type: elasticsearch
+zipkin.storage.StorageComponent: elasticsearch
+zipkin.storage.elasticsearch: elasticsearch
+zipkin.storage.elasticsearch.cluster: elasticsearch
+zipkin.storage.elasticsearch.max-requests: 30
+zipkin.storage.elasticsearch.index: zipkin
+zipkin.storage.elasticsearch.index-shards: 3
+zipkin.storage.elasticsearch.index-replicas: 1
+zipkin.storage.elasticsearch.hosts: 192.168.1.140:9200
